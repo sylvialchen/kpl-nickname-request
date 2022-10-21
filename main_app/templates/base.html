@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+  <link rel="stylesheet" type="text/css" />
+  <title>Kappa Phi Lambda Nickname Request Portal</title>
+</head>
+
+<body>
+  <header class="navbar-fixed">
+    <nav>
+      <div class="nav-wrapper">
+        <ul>
+          <li>
+            <a href="/" class="left brand-logo">Nickname Portal</a>
+          </li>
+        </ul>
+        <ul class="right">
+          <!-- changes below -->
+          <li><a href="">About</a></li>
+          {% if user.is_authenticated %}
+          <li><a href=""></a></li>
+          <li><a href=""></a></li>
+          <li><a href=""></a></li>
+          <li><a href=""></a></li>
+          <li><a href="">Log Out</a></li>
+          {% else %}
+          <li><a href="">Log In</a></li>
+          {% endif %}
+        </ul>
+      </div>
+    </nav>
+  </header>
+  <main class="container">
+    {% block content %}
+    {% endblock %}
+  </main>
+  <footer class="page-footer">
+    <div class="right">
+      All Rights Reserved, &copy; 2022 Kappa Phi Lambda Sorority Incorporated &nbsp;
+    </div>
+  </footer>
+</body>
+
+</html>
+</body>
+
+</html>

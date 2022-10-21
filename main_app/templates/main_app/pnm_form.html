@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% if object %}
+<h2>Edit {{object.name}}'s information</h2>
+{% else %}
+<h2>Add a PNM</h2>
+{% endif %}
+
+<form action="" method="post">
+  {% csrf_token %}
+  <!-- We must always use this tag in our forms -->
+  <table>
+    {{ form.as_table }}
+  </table>
+  <input class="btn green" type="submit" value="{% if object %} Edit {% else %} Add {% endif %}">
+</form>
+
+
+<script>
+  var selectEl = document.getElementById('id_status');
+  M.FormSelect.init(selectEl);
+</script>
+{% endblock %}
