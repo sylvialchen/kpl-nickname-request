@@ -30,7 +30,10 @@ urlpatterns = [
 
 
     # Detail
-    path('chapters/<int:pk>/', views.ChapterDetail.as_view(), name='chapter_detail'),
+    path('chapters/<int:chapter_id>/',
+         views.chapter_detail, name='chapter_detail'),
+    path('sisters/<int:sister_id>/',
+         views.sister_detail, name='sister_detail'),
     path('pnms/<int:pk>/', views.PnmDetail.as_view(), name='pnm_detail'),
     path('nickname_requests/<int:pk>/',
          views.Nickname_RequestDetail.as_view(), name='nickname_request_detail'),

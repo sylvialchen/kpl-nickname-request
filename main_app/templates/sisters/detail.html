@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<table>
+  <td>
+    {{ sister.first_name }}
+    {{ sister.last_name }}
+    #
+    {{ sister.line_number }}
+    {{ sister.nickname }}
+    </p>
+    <p>
+      <b>Tree:</b>
+      {{ sister.tree }}
+    </p>
+    <p>
+      <b>Big Sister:</b>
+      {{ sister.big_sister }}
+    </p>
+    <b>Nickname Meaning:</b>
+    {{ sister.nickname_meaning }}
+  <td>
+    {% if sister.chapter == sister.crossing_chapter %}
+    {{ sister.crossing_chapter }}
+    {% else %}
+    <p>Roster:
+      {{ sister.chapter }}
+    </p>
+    <p>Crossing Chapter:
+      {{ sister.crossing_chapter }}
+    </p>
+    {% endif %}
+    <p><b>Crossed:</b>
+      {{ sister.crossing_semester }}
+      {{ sister.crossing_year }}
+    </p>
+  </td>
+</table>
+{% if little %}
+Little Sisters
+<div class="card">
+  <div class="card-content">
+    <span class="card-title">
+      <a href="{% url 'sister_detail' little.id %}">
+        {{ little.first_name }}</a>
+    </span>
+  </div>
+</div>
+{% else %}
+No Littles
+{% endif %}
+
+{% if pnm %}
+PNM Little
+{% for p in pnm %}
+<div class="card">
+  <div class="card-content">
+    <span class="card-title">
+      {{ p.first_name }}
+    </span>
+  </div>
+</div>
+{% endfor %}
+{% else %}
+No PNM Littles
+{% endif %}
+
+
+
+status
+{% endblock %}

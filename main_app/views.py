@@ -25,9 +25,9 @@ class ChapterUpdate(UpdateView):
     fields = '__all__'
 
 
-class ChapterDetail(DetailView):
-    model = Chapter
-    template_name = 'chapters/detail.html'
+# class ChapterDetail(DetailView):
+#     model = Chapter
+#     template_name = 'chapters/detail.html'
 
 
 class ChapterList(ListView):
@@ -87,7 +87,7 @@ class Nickname_RequestCreate(CreateView):
 
 class Nickname_RequestUpdate(UpdateView):
     model = Nickname_Request
-    fields = ['name', 'nickname_meaning', 'pnm']
+    fields = '__all__'
 
 
 class Nickname_RequestDetail(DetailView):
@@ -97,3 +97,37 @@ class Nickname_RequestDetail(DetailView):
 
 class Nickname_RequestList(ListView):
     model = Nickname_Request
+
+
+def chapter_detail(request, chapter_id):
+    chapter = Chapter.objects.get(id=chapter_id)
+    sisters_within_chapter = Sister.objects.filter(chapter_id=chapter_id)
+    try:
+        pnms_within_chapter = Pnm.objects.filter(chapter_id=chapter_id)
+    except:
+        pnms_within_chapter = None
+    return render(request, 'chapters/detail.html', {
+        'chapter': chapter,
+        'sisters': sisters_within_chapter,
+        'pnms': pnms_within_chapter
+    })
+
+
+def sister_detail(request, sister_id):
+    sister = Sister.objects.get(id=sister_id)
+
+    try:
+        little = Sister.objects.get(big_sister=sister_id)
+    except:
+        little = None
+
+    try:
+        pnm_little = Pnm.objects.filter(big_sister=sister_id)
+    except:
+        pnm_little = None
+
+    return render(request, 'sisters/detail.html', {
+        'sister': sister,
+        'little': little,
+        'pnm': pnm_little
+    })
