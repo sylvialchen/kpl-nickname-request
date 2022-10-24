@@ -3,6 +3,7 @@
 {% block content %}
 
 <h3>Chapter List</h3>
+<a href="{% url 'chapter_create' %}">Add a New Chapter</a>
 {% for chapter in object_list %}
 <div class="card">
   <a href="{% url 'chapter_detail' chapter.id %}">
