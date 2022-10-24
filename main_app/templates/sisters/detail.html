@@ -15,13 +15,17 @@
     </p>
     <p>
       <b>Big Sister:</b>
-      {{ sister.big_sister }}
+      {% if sister.big_sister %}
+      <a href="{% url 'sister_detail' sister.big_sister_id %}">
+        {{ sister.big_sister }}</a>
+      {% endif %}
     </p>
     <b>Nickname Meaning:</b>
     {{ sister.nickname_meaning }}
   <td>
     {% if sister.chapter == sister.crossing_chapter %}
-    {{ sister.crossing_chapter }}
+    <a href="{% url 'chapter_detail' sister.crossing_chapter_id %}">
+      {{ sister.crossing_chapter }}</a>
     {% else %}
     <p>Roster:
       {{ sister.chapter }}
@@ -47,16 +51,20 @@ Little Sisters
   </div>
 </div>
 {% else %}
-No Littles
+<h5>No Crossed Little Yet!</h5>
+
 {% endif %}
 
 {% if pnm %}
-PNM Little
+<h5>PNM Little(s)</h5>
 {% for p in pnm %}
 <div class="card">
   <div class="card-content">
     <span class="card-title">
-      {{ p.first_name }}
+      <a href="{% url 'pnm_detail' p.id %}">
+        {{ p.first_name }}
+        {{ p.last_name }}</a>
+
     </span>
   </div>
 </div>
@@ -64,8 +72,4 @@ PNM Little
 {% else %}
 No PNM Littles
 {% endif %}
-
-
-
-status
 {% endblock %}

@@ -1,9 +1,11 @@
 from django.db import models
 from django.urls import reverse
-from datetime import date
 from django.contrib.auth.models import User
-import datetime
 from django.utils import timezone
+# from datetime import date
+import datetime
+# from psycopg2 import Date
+
 # Create your models here.
 
 STATUS = (
@@ -13,6 +15,7 @@ STATUS = (
 )
 
 NICKNAME_STATUS = (
+    ("RE", "Requested"),
     ("AP", "Approved"),
     ("QU", "Queued"),
     ("DE", "Denied")
@@ -72,11 +75,12 @@ class Pnm(models.Model):
     first_name = models.CharField(max_length=20)
     last_name = models.CharField(max_length=25)
     process_chapter = models.ForeignKey(
-        Chapter, on_delete=models.CASCADE, related_name='process_chapter', blank=True, null=True)
+        Chapter, on_delete=models.PROTECT, related_name='process_chapter', blank=True, null=True)
     process_semester = models.CharField(max_length=6)
     process_year = models.PositiveSmallIntegerField()
     potential_line_number = models.PositiveSmallIntegerField()
-    big_sister = models.ForeignKey(Sister, on_delete=models.CASCADE, null=True)
+    big_sister = models.ForeignKey(
+        Sister, on_delete=models.SET_NULL, null=True)
 
     def __str__(self):
         return f"PNM {self.first_name}"
@@ -89,33 +93,22 @@ class Nickname_Request (models.Model):
     name = models.CharField("nickname request", max_length=20)
     nickname_meaning = models.TextField(max_length=250)
     pnm = models.ForeignKey(Pnm, on_delete=models.CASCADE, null=True)
-    requestor: models.ForeignKey(Sister, on_delete=models.CASCADE, null=True)
-    req_date = models.DateTimeField('date requested')
-    nickname_status: models.CharField(
-        max_length=2,
-        choices=NICKNAME_STATUS,
-        default="null")
-
-    def was_requested_recently(self):
-        now = timezone.now()
-        return now - datetime.timedelta(days=1) <= self.req_date <= now
+    requestor = models.ForeignKey(Sister, on_delete=models.CASCADE, null=True)
+    req_date = models.DateTimeField(
+        'date requested', auto_created=True, default=timezone.now())
+    nickname_approval_status = models.CharField("Nickname Approval Status",
+                                                max_length=2,
+                                                choices=NICKNAME_STATUS,
+                                                default=NICKNAME_STATUS[0][0])
+    # def was_requested_recently(self):
+    #     now = timezone.now()
+    #     return now - datetime.timedelta(days=1) <= self.req_date <= now
 
     def __str__(self):
         return f"PNM {self.name}"
-    # def get_absolute_url(self):
-    #     return reverse('chapter_detail', kwargs={'pk': self.id})
 
-    #     def get_absolute_url(self):
-    #         return reverse('toys_detail', kwargs={'pk': self.id})
+    def get_absolute_url(self):
+        return reverse('sister_detail', kwargs={'sister_id': self.id})
 
-    # # Add the foreign key linking to a user instance
-    # user = models.ForeignKey(User, on_delete=models.CASCADE)
-    # def get_absolute_url(self):
-    #     return reverse('detail', kwargs={'cat_id': self.id})
-
-    #     def __str__(self):
-    #         return f"{self.get_meal_display()} on {self.date}"
-
-    #     # change the default sort
     #     class Meta:
     #         ordering = ['-date']

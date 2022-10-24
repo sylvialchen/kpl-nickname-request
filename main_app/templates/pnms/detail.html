@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="card">
+  <div class="card-content">
+    <table>
+      <td>
+        {{ pnm.first_name }}
+        {{ pnm.last_name }}
+        #
+        {{ pnm.potential_line_number }}
+        </p>
+        <p>
+          <b>Potential Tree:</b>
+          {{ pnm.big_sister.tree }}
+        </p>
+        <p>
+          <b>Big Sister:</b>
+          <a href="{% url 'sister_detail' pnm.big_sister.id %}">
+            {{ pnm.big_sister }}</a>
+        </p>
+      <td>
+        <p>
+          <a href="{% url 'chapter_detail' pnm.process_chapter.id %}">
+            {{ pnm.process_chapter }}</a>
+        </p>
+        <p>
+          {{ pnm.process_semester }}
+          {{ pnm.process_year }}
+        </p>
+      </td>
+    </table>
+  </div>
+</div>
+
+{% if nickname_requests %}
+<h5>Nickname Requests</h5>
+{% if nickname_requests|length < 3 %}
+<a href="{% url 'nickname_request_create' pnm.id %}">Send a nickname request for
+  {{ pnm.first_name }}</a>
+{% endif %}
+{% for n in nickname_requests %}
+<div class="card">
+  <div class="card-content">
+    <span class="card-title">
+      <a href="">
+        {{ n.name }}</a></span>
+    <p>
+      {{ n.nickname_meaning }}
+    </p>
+    <p><b>Requested on:</b>
+      {{ n.req_date }}
+    </p>
+    <p><b>Status:
+        {{ n.nickname_approval_status }}</b>
+    </p>
+    </span>
+  </div>
+</div>
+{% endfor %}
+{% else %}
+<h5>No Nickname Requests :(</h5>
+<a href="{% url 'nickname_request_create' pnm.id %}">Send a nickname request for
+  {{ pnm.first_name }}</a>
+{% endif %}
+{% endblock %}

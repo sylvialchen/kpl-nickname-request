@@ -1,7 +1,62 @@
 {% extends 'base.html' %}
 
 {% block content %}
+<table>
+  <th>
+    Request Date
+  </th>
+  <th>
+    Requestor
+  </th>
+  <th>
+    School
+  </th>
+  <th>
+    PNM Name
+  </th>
+  <th>
+    Nickname Requested
+  </th>
+  <th>
+    Nickname Meaning
+  </th>
+  <th>
+    Status
+  </th>
+  {% if object_list %}
+  {% for r in object_list %}
+  <tr>
+    <td>
+      {{ r.req_date }}
+    </td>
+    <td>
+      {{ r.requestor.first_name }}
+      {{ r.requestor.last_name }}
+    </td>
+    <td>
+      {{ r.pnm.process_chapter }}
+    </td>
+    <td>
+      {{ r.pnm.first_name }}
+      {{ r.pnm.last_name }}
+    </td>
+    <td>
+      {{ r.name }}
+    </td>
+    <td>
+      {{ r.nickname_meaning }}
+    </td>
+    <td>
+      {{ r.nickname_approval_status }}
+    </td>
+  </tr>
 
-Nickname Request List
+  {% endfor %}
+  {% else %}
+  No Pending Requests
+  {% endif %}
+</table>
+
+Missing Requests
 
 {% endblock %}

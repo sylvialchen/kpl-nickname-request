@@ -21,16 +21,14 @@
           </li>
         </ul>
         <ul class="right">
-          <!-- changes below -->
-          <li><a href="">About</a></li>
           {% if user.is_authenticated %}
-          <li><a href=""></a></li>
-          <li><a href=""></a></li>
-          <li><a href=""></a></li>
-          <li><a href=""></a></li>
-          <li><a href="">Log Out</a></li>
+          <li><a href="{% url 'chapter_index' %}">Chapters</a></li>
+          <li><a href="{% url 'sister_index' %}">Sisters</a></li>
+          <li><a href="{% url 'pnm_index' %}">PNMs</a></li>
+          <li><a href="{% url 'nickname_request_index' %}">Nickname Requests</a></li>
+          <li><a href="{% url 'logout' %}">Log Out</a></li>
           {% else %}
-          <li><a href="">Log In</a></li>
+          <li><a href="{% url 'login' %}">Log In</a></li>
           {% endif %}
         </ul>
       </div>

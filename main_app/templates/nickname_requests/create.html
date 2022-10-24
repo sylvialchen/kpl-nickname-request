@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<form action="{% url 'add_nickname_request' pnm.id pnm.big_sister.id %}" method="POST">
+  {% csrf_token %}
+  <p>
+    {{ pnm.first_name }}
+    {% if msg %}
+    {{ msg }}
+    {% endif %}
+  </p>
+  {{ form.as_p }}
+
+  <input type="submit" class="btn" value="Send Nickname Request" />
+</form>
+
+{% endblock %}
+
+</form>

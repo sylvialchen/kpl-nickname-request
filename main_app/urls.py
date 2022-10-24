@@ -1,22 +1,28 @@
 from django.urls import path
 from . import views
-from . views import SisterList, ChapterList, PnmList, Nickname_RequestList
+from . views import SisterList, ChapterList, Nickname_RequestList
 
 urlpatterns = [
 
     # Lists
     path('sisters/', SisterList.as_view(), name='sister_index'),
     path('chapters/', ChapterList.as_view(), name='chapter_index'),
-    path('pnms/', PnmList.as_view(), name='pnm_index'),
+    path('pnms/', views.pnm_index, name='pnm_index'),
     path('nickname_requests/', Nickname_RequestList.as_view(),
          name='nickname_request_index'),
+
+    #     path('nickname_requests/', views.nickname_request_index,
+    #          name='nickname_request_index'),
 
     # Create
     path('sisters/create/', views.SisterCreate.as_view(), name='sister_create'),
     path('chapters/create/', views.ChapterCreate.as_view(), name='chapter_create'),
     path('pnms/create/', views.PnmCreate.as_view(), name='pnm_create'),
-    path('nickname_requests/create/', views.Nickname_RequestCreate.as_view(),
+    path('pnms/nickname_requests/create/<int:pnm_id>', views.nickname_request_create,
          name='nickname_request_create'),
+    path('pnms/nickname_requests/create/<int:pnm_id>/<int:sister_id>', views.add_nickname_request,
+         name='add_nickname_request'),
+
 
     # Update
     path('sisters/<int:pk>/update/',
@@ -34,7 +40,7 @@ urlpatterns = [
          views.chapter_detail, name='chapter_detail'),
     path('sisters/<int:sister_id>/',
          views.sister_detail, name='sister_detail'),
-    path('pnms/<int:pk>/', views.PnmDetail.as_view(), name='pnm_detail'),
+    path('pnms/<int:pnm_id>/', views.pnm_detail, name='pnm_detail'),
     path('nickname_requests/<int:pk>/',
          views.Nickname_RequestDetail.as_view(), name='nickname_request_detail'),
 ]

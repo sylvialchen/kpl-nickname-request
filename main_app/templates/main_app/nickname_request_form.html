@@ -3,22 +3,22 @@
 {% block content %}
 
 {% if object %}
-<h2>Edit {{object.name}}'s information</h2>
+<h2>Edit Request for: {{object.name}} </h2>
 {% else %}
 <h2>Add a Nickname Request</h2>
 {% endif %}
 
-<form action="" method="post">
+<form action="" method="POST">
   {% csrf_token %}
   <table>
-    {{ form.as_table }}
+    {{ form.as_p }}
   </table>
   <input class="btn green" type="submit" value="{% if object %} Edit {% else %} Add {% endif %}">
 </form>
 
 
 <script>
-  var selectEl = document.getElementById('id_status');
+  var selectEl = document.getElementById('id_pnm');
   M.FormSelect.init(selectEl);
 </script>
 {% endblock %}
