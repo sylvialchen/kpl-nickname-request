@@ -1,0 +1,1 @@
+web: gunicorn kpl_sister_nicknames.wsgi
