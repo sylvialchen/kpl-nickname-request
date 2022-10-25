@@ -1,13 +1,13 @@
 from django.urls import path
 from . import views
-from . views import SisterList, ChapterList, Nickname_RequestList
+from . views import SisterList, ChapterList, Nickname_RequestList, PnmList
 
 urlpatterns = [
 
     # Lists
     path('sisters/', SisterList.as_view(), name='sister_index'),
     path('chapters/', ChapterList.as_view(), name='chapter_index'),
-    path('pnms/', views.pnm_index, name='pnm_index'),
+    path('pnms/', PnmList.as_view(), name='pnm_index'),
     path('nickname_requests/', Nickname_RequestList.as_view(),
          name='nickname_request_index'),
 
@@ -31,8 +31,13 @@ urlpatterns = [
          views.ChapterUpdate.as_view(), name='chapter_update'),
     path('pnms/<int:pk>/update/',
          views.PnmUpdate.as_view(), name='pnm_update'),
-    path('nickname_requests/<int:pk>/update/',
-         views.ChapterUpdate.as_view(), name='nickname_request_update'),
+    path('nickname_requests/<int:nr_id>/approve/',
+         views.nickname_request_approve, name='nickname_request_update'),
+    path('nickname_requests/<int:nr_id>/queue/',
+         views.nickname_request_queue, name='nickname_request_queue'),
+    path('nickname_requests/<int:nr_id>/deny/',
+         views.nickname_request_deny, name='nickname_request_deny'),
+
 
 
     # Detail

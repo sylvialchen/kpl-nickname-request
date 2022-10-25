@@ -6,8 +6,8 @@ from django.views.generic.detail import DetailView
 from .models import Chapter, Sister, Pnm, Nickname_Request
 from django.views.generic import ListView
 from . forms import Nickname_RequestForm
-from django.contrib.auth.decorators import login_required
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.decorators import login_required, permission_required
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 
 # Create your views here.
 
@@ -84,8 +84,9 @@ class Nickname_RequestDetail(LoginRequiredMixin, DetailView):
     fields = '__all__'
 
 
-class Nickname_RequestList(LoginRequiredMixin, ListView):
+class Nickname_RequestList(LoginRequiredMixin, PermissionRequiredMixin, ListView):
     model = Nickname_Request
+    permission_required = 'nickname_request.can_view'
 
 #####################################
 #####################################
@@ -158,16 +159,7 @@ def chapter_detail(request, chapter_id):
 
 
 @login_required
-def pnm_index(request):
-    pnm = Pnm.objects.all()
-    nickname_requests = Nickname_Request.objects.all()
-    return render(request, 'pnms/index.html', {
-        'pnm': pnm,
-        'nickname_requests': nickname_requests
-    })
-
-
-@login_required
+@permission_required('main_app.add_nickname_request')
 def nickname_request_create(request, pnm_id, *msg):
     pnm = Pnm.objects.get(id=pnm_id)
     nickname_request_form = Nickname_RequestForm()
@@ -194,6 +186,7 @@ def check_nickname_against_roster(name):
 
 
 @login_required
+@permission_required('main_app.add_nickname_request')
 def add_nickname_request(request, pnm_id, sister_id):
     form = Nickname_RequestForm(request.POST)
     if form.is_valid():
@@ -208,3 +201,25 @@ def add_nickname_request(request, pnm_id, sister_id):
             new_nickname_request.nickname_approval_status = 'RE'
             new_nickname_request.save()
             return redirect(f'/pnms/{pnm_id}')
+
+
+def nickname_request_approve(request, nr_id):
+    if (request.POST):
+        to_approve = Nickname_Request.objects.get(id=nr_id)
+        to_approve.nickname_approval_status = 'AP'
+        to_approve.save()
+    return redirect('/nickname_requests/')
+
+def nickname_request_queue(request, nr_id):
+    if (request.POST):
+        to_queue = Nickname_Request.objects.get(id=nr_id)
+        to_queue.nickname_approval_status = 'QU'
+        to_queue.save()
+    return redirect('/nickname_requests/')
+
+def nickname_request_deny(request, nr_id):
+    if (request.POST):
+        to_deny = Nickname_Request.objects.get(id=nr_id)
+        to_deny.nickname_approval_status = 'DE'
+        to_deny.save()
+    return redirect('/nickname_requests/')

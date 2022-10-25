@@ -9,10 +9,10 @@
     Requestor
   </th>
   <th>
-    School
+    PNM Name
   </th>
   <th>
-    PNM Name
+    PNM School
   </th>
   <th>
     Nickname Requested
@@ -21,7 +21,10 @@
     Nickname Meaning
   </th>
   <th>
-    Status
+    Current Status
+  </th>
+  <th>
+    Action
   </th>
   {% if object_list %}
   {% for r in object_list %}
@@ -34,11 +37,11 @@
       {{ r.requestor.last_name }}
     </td>
     <td>
-      {{ r.pnm.process_chapter }}
-    </td>
-    <td>
       {{ r.pnm.first_name }}
       {{ r.pnm.last_name }}
+    </td>
+    <td>
+      {{ r.pnm.process_chapter.chapter_school }}
     </td>
     <td>
       {{ r.name }}
@@ -48,6 +51,23 @@
     </td>
     <td>
       {{ r.nickname_approval_status }}
+    </td>
+    <td>
+      <form action="{% url 'nickname_request_update' r.id %}" method="POST">
+        {% csrf_token %}
+        <input class="btn red" type="submit" value="Approve">
+      </form>
+
+      <form action="{% url 'nickname_request_queue' r.id %}" method="POST">
+        {% csrf_token %}
+        <input class="btn red" type="submit" value="Queue">
+      </form>
+
+      <form action="{% url 'nickname_request_deny' r.id %}" method="POST">
+        {% csrf_token %}
+        <input class="btn red" type="submit" value="Deny">
+      </form>
+
     </td>
   </tr>
 
