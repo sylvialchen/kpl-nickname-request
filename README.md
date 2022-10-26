@@ -12,7 +12,7 @@ An organizational tool for Greek Lettered Organizations to receive nickname requ
 
 
 ## Getting Started
-* [Hosted on GitHub Pages](https://kplsisternicknames.herokuapp.com)
+* [Hosted on Heroku](https://kplsisternicknames.herokuapp.com)
 * No Signup functionality. Members must be invited in order to access this site.
 
 
