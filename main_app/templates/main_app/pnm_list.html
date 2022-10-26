@@ -67,11 +67,10 @@
         N
         {% endif %}
         {% endfor %}
+        {% else %}
+        N
+        {% endif %}
       </td>
-      {% else %}
-      N
-      </td>
-      {% endif %}
       {% if perms.main_app.delete_pnm %}
       <td>
         <form action="{% url 'pnm_delete' p.id %}" method="POST">
