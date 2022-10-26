@@ -1,75 +1,76 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<table>
-  <td>
-    {{ sister.first_name }}
-    {{ sister.last_name }}
-    #
-    {{ sister.line_number }}
-    {{ sister.nickname }}
-    </p>
-    <p>
-      <b>Tree:</b>
-      {{ sister.tree }}
-    </p>
-    <p>
-      <b>Big Sister:</b>
-      {% if sister.big_sister %}
-      <a href="{% url 'sister_detail' sister.big_sister_id %}">
-        {{ sister.big_sister }}</a>
+<main class="container">
+  <table>
+    <td>
+      {{ sister.first_name }}
+      {{ sister.last_name }}
+      #
+      {{ sister.line_number }}
+      {{ sister.nickname }}
+      </p>
+      <p>
+        <b>Tree:</b>
+        {{ sister.tree }}
+      </p>
+      <p>
+        <b>Big Sister:</b>
+        {% if sister.big_sister %}
+        <a href="{% url 'sister_detail' sister.big_sister_id %}">
+          {{ sister.big_sister }}</a>
+        {% endif %}
+      </p>
+      <b>Nickname Meaning:</b>
+      {{ sister.nickname_meaning }}
+    <td>
+      {% if sister.chapter == sister.crossing_chapter %}
+      <a href="{% url 'chapter_detail' sister.crossing_chapter_id %}">
+        {{ sister.crossing_chapter }}</a>
+      {% else %}
+      <p>Roster:
+        {{ sister.chapter }}
+      </p>
+      <p>Crossing Chapter:
+        {{ sister.crossing_chapter }}
+      </p>
       {% endif %}
-    </p>
-    <b>Nickname Meaning:</b>
-    {{ sister.nickname_meaning }}
-  <td>
-    {% if sister.chapter == sister.crossing_chapter %}
-    <a href="{% url 'chapter_detail' sister.crossing_chapter_id %}">
-      {{ sister.crossing_chapter }}</a>
-    {% else %}
-    <p>Roster:
-      {{ sister.chapter }}
-    </p>
-    <p>Crossing Chapter:
-      {{ sister.crossing_chapter }}
-    </p>
-    {% endif %}
-    <p><b>Crossed:</b>
-      {{ sister.crossing_semester }}
-      {{ sister.crossing_year }}
-    </p>
-  </td>
-</table>
-{% if little %}
-Little Sisters
-<div class="card">
-  <div class="card-content">
-    <span class="card-title">
-      <a href="{% url 'sister_detail' little.id %}">
-        {{ little.first_name }}</a>
-    </span>
+      <p><b>Crossed:</b>
+        {{ sister.crossing_semester }}
+        {{ sister.crossing_year }}
+      </p>
+    </td>
+  </table>
+  {% if little %}
+  Little Sisters
+  <div class="card">
+    <div class="card-content">
+      <span class="card-title">
+        <a href="{% url 'sister_detail' little.id %}">
+          {{ little.first_name }}</a>
+      </span>
+    </div>
   </div>
-</div>
-{% else %}
-<h5>No Crossed Little Yet!</h5>
+  {% else %}
+  <h5>No Crossed Little Yet!</h5>
 
-{% endif %}
+  {% endif %}
 
-{% if pnm %}
-<h5>PNM Little(s)</h5>
-{% for p in pnm %}
-<div class="card">
-  <div class="card-content">
-    <span class="card-title">
-      <a href="{% url 'pnm_detail' p.id %}">
-        {{ p.first_name }}
-        {{ p.last_name }}</a>
+  {% if pnm %}
+  <h5>PNM Little(s)</h5>
+  {% for p in pnm %}
+  <div class="card">
+    <div class="card-content">
+      <span class="card-title">
+        <a href="{% url 'pnm_detail' p.id %}">
+          {{ p.first_name }}
+          {{ p.last_name }}</a>
 
-    </span>
+      </span>
+    </div>
   </div>
-</div>
-{% endfor %}
-{% else %}
-No PNM Littles
-{% endif %}
-{% endblock %}
+  {% endfor %}
+  {% else %}
+  No PNM Littles
+  {% endif %}
+  {% endblock %}

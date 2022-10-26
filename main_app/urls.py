@@ -1,9 +1,9 @@
-from django.urls import path
+from django.urls import path, include
 from . import views
 from . views import SisterList, ChapterList, Nickname_RequestList, PnmList
 
 urlpatterns = [
-
+    path('', views.home, name='home'),
     # Lists
     path('sisters/', SisterList.as_view(), name='sister_index'),
     path('chapters/', ChapterList.as_view(), name='chapter_index'),
@@ -48,4 +48,7 @@ urlpatterns = [
     path('pnms/<int:pnm_id>/', views.pnm_detail, name='pnm_detail'),
     path('nickname_requests/<int:pk>/',
          views.Nickname_RequestDetail.as_view(), name='nickname_request_detail'),
+
+     # Delete
+     path('pnms/<int:pnm_id>/delete/', views.pnm_delete, name='pnm_delete'),
 ]

@@ -1,55 +1,55 @@
 {% extends 'base.html' %}
 
 {% block content %}
-
-<h3>Sister List</h3>
-{% if perms.catalog.add_sister %}
-<a href="{% url 'sister_create' %}">Add a New Sister</a>
-{% endif %}
-<table>
-  <th>
-    Line #
-  </th>
-  <th>
-    Name
-  <th>
-    Nickname
-  </th>
-  <th>
-    Class
-  </th>
-  <th>
-    Crossed
-  </th>
-  <th>
-    Status
-  </th>
-
-  {% for sister in object_list %}
-  <tr>
-    <td>
-      {{ sister.line_number }}
-    </td>
-    <td>
-      <a href="{% url 'sister_detail' sister.id %}">
-        {{ sister.first_name }}
-        {{ sister.last_name }}</a>
-    </td>
-    <td>
-      {{ sister.nickname }}
-    </td>
-    <td>
+<main class="container">
+  <h3>Sister List</h3>
+  {% if perms.main_app.add_sister %}
+  <a href="{% url 'sister_create' %}">Add a New Sister</a>
+  {% endif %}
+  <table class="highlight">
+    <th>
+      Line #
+    </th>
+    <th>
+      Name
+    <th>
+      Nickname
+    </th>
+    <th>
       Class
-    </td>
-    <td>
-      {{ sister.crossing_semester }}
-      {{ sister.crossing_year }}
-    </td>
-    <td>
-      {{ sister.status }}
-    </td>
-  </tr>
-  {% endfor %}
-</table>
+    </th>
+    <th>
+      Crossed
+    </th>
+    <th>
+      Status
+    </th>
 
-{% endblock %}
+    {% for sister in object_list %}
+    <tr>
+      <td>
+        {{ sister.line_number }}
+      </td>
+      <td>
+        <a href="{% url 'sister_detail' sister.id %}">
+          {{ sister.first_name }}
+          {{ sister.last_name }}</a>
+      </td>
+      <td>
+        {{ sister.nickname }}
+      </td>
+      <td>
+        Class
+      </td>
+      <td>
+        {{ sister.crossing_semester }}
+        {{ sister.crossing_year }}
+      </td>
+      <td>
+        {{ sister.status }}
+      </td>
+    </tr>
+    {% endfor %}
+  </table>
+
+  {% endblock %}

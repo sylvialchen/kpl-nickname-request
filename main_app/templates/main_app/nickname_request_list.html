@@ -1,82 +1,85 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<table>
-  <th>
-    Request Date
-  </th>
-  <th>
-    Requestor
-  </th>
-  <th>
-    PNM Name
-  </th>
-  <th>
-    PNM School
-  </th>
-  <th>
-    Nickname Requested
-  </th>
-  <th>
-    Nickname Meaning
-  </th>
-  <th>
-    Current Status
-  </th>
-  <th>
-    Action
-  </th>
-  {% if object_list %}
-  {% for r in object_list %}
-  <tr>
-    <td>
-      {{ r.req_date }}
-    </td>
-    <td>
-      {{ r.requestor.first_name }}
-      {{ r.requestor.last_name }}
-    </td>
-    <td>
-      {{ r.pnm.first_name }}
-      {{ r.pnm.last_name }}
-    </td>
-    <td>
-      {{ r.pnm.process_chapter.chapter_school }}
-    </td>
-    <td>
-      {{ r.name }}
-    </td>
-    <td>
-      {{ r.nickname_meaning }}
-    </td>
-    <td>
-      {{ r.nickname_approval_status }}
-    </td>
-    <td>
-      <form action="{% url 'nickname_request_update' r.id %}" method="POST">
-        {% csrf_token %}
-        <input class="btn red" type="submit" value="Approve">
-      </form>
+<main class="container">
+  <h3>Nickname Requests</h3>
+  <table class="highlight">
+    <th>
+      Request Date
+    </th>
+    <th>
+      Requestor
+    </th>
+    <th>
+      PNM Name
+    </th>
+    <th>
+      PNM School
+    </th>
+    <th>
+      Nickname Requested
+    </th>
+    <th>
+      Nickname Meaning
+    </th>
+    <th>
+      Current Status
+    </th>
+    {% if perms.main_app.change_nickname_request %}
+    <th>
+      Action
+    </th>
+    {% endif %}
+    {% if object_list %}
+    {% for r in object_list %}
+    <tr>
+      <td>
+        {{ r.req_date }}
+      </td>
+      <td>
+        {{ r.requestor.first_name }}
+        {{ r.requestor.last_name }}
+      </td>
+      <td>
+        {{ r.pnm.first_name }}
+        {{ r.pnm.last_name }}
+      </td>
+      <td>
+        {{ r.pnm.process_chapter.chapter_school }}
+      </td>
+      <td>
+        {{ r.name }}
+      </td>
+      <td>
+        {{ r.nickname_meaning }}
+      </td>
+      <td>
+        {{ r.nickname_approval_status }}
+      </td>
+      {% if perms.main_app.change_nickname_request %}
+      <td>
+        <form action="{% url 'nickname_request_update' r.id %}" method="POST">
+          {% csrf_token %}
+          <input class="btn grey" type="submit" value=&#x2714;>
+        </form>
 
-      <form action="{% url 'nickname_request_queue' r.id %}" method="POST">
-        {% csrf_token %}
-        <input class="btn red" type="submit" value="Queue">
-      </form>
+        <form action="{% url 'nickname_request_queue' r.id %}" method="POST">
+          {% csrf_token %}
+          <input class="btn grey" type="submit" value='...'>
+        </form>
 
-      <form action="{% url 'nickname_request_deny' r.id %}" method="POST">
-        {% csrf_token %}
-        <input class="btn red" type="submit" value="Deny">
-      </form>
+        <form action="{% url 'nickname_request_deny' r.id %}" method="POST">
+          {% csrf_token %}
+          <input class="btn grey" type="submit" value='X'>
+        </form>
+      </td>
+      {% endif %}
+    </tr>
 
-    </td>
-  </tr>
+    {% endfor %}
+    {% else %}
+    No Pending Requests
+    {% endif %}
+  </table>
 
-  {% endfor %}
-  {% else %}
-  No Pending Requests
-  {% endif %}
-</table>
-
-Missing Requests
-
-{% endblock %}
+  {% endblock %}

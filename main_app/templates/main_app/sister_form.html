@@ -1,31 +1,31 @@
 {% extends 'base.html' %}
 
 {% block content %}
+<main class="container">
+  {% if object %}
+  <h1>Edit {{object.name}}'s information</h1>
+  {% else %}
+  <h1>Add a Sister</h1>
+  {% endif %}
 
-{% if object %}
-<h1>Edit {{object.name}}'s information</h1>
-{% else %}
-<h1>Add a Sister</h1>
-{% endif %}
-
-<form action="" method="post">
-  {% csrf_token %}
-  <!-- We must always use this tag in our forms -->
-  <table>
-    {{ form.as_table }}
-  </table>
-  <input class="btn green" type="submit" value="{% if object %} Edit {% else %} Add {% endif %}">
-</form>
+  <form action="" method="post">
+    {% csrf_token %}
+    <!-- We must always use this tag in our forms -->
+    <table>
+      {{ form.as_table }}
+    </table>
+    <input class="btn green" type="submit" value="{% if object %} Edit {% else %} Add {% endif %}">
+  </form>
 
 
-<script>
-  var selectEl = document.getElementById('id_status');
-  M.FormSelect.init(selectEl);
-  var selectEl = document.getElementById('id_big_sister');
-  M.FormSelect.init(selectEl);
-  var selectEl = document.getElementById('id_crossing_chapter');
-  M.FormSelect.init(selectEl);
-  var selectEl = document.getElementById('id_chapter');
-  M.FormSelect.init(selectEl);
-</script>
-{% endblock %}
+  <script>
+    var selectEl = document.getElementById('id_status');
+    M.FormSelect.init(selectEl);
+    var selectEl = document.getElementById('id_big_sister');
+    M.FormSelect.init(selectEl);
+    var selectEl = document.getElementById('id_crossing_chapter');
+    M.FormSelect.init(selectEl);
+    var selectEl = document.getElementById('id_chapter');
+    M.FormSelect.init(selectEl);
+  </script>
+  {% endblock %}

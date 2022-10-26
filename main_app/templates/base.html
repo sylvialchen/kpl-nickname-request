@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+{% load static %}
 
 <head>
   <meta charset="UTF-8">
@@ -7,7 +8,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" />
   <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-  <link rel="stylesheet" type="text/css" />
+  <link rel="stylesheet" href="{% static 'kpl_sister_nicknames/style.css' %}" />
   <title>Kappa Phi Lambda Nickname Request Portal</title>
 </head>
 
@@ -17,7 +18,7 @@
       <div class="nav-wrapper">
         <ul>
           <li>
-            <a href="/" class="left brand-logo">Nickname Portal</a>
+            <a href="/" class="left brand-logo"><img class="logo" src="{% static 'kpl_sister_nicknames/kplLogo' %}" /></a>
           </li>
         </ul>
         <ul class="right">
@@ -34,18 +35,15 @@
       </div>
     </nav>
   </header>
-  <main class="container">
-    {% block content %}
-    {% endblock %}
+
+  {% block content %}
+  {% endblock %}
   </main>
   <footer class="page-footer">
     <div class="right">
       All Rights Reserved, &copy; 2022 Kappa Phi Lambda Sorority Incorporated &nbsp;
     </div>
   </footer>
-</body>
-
-</html>
 </body>
 
 </html>

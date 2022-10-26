@@ -13,10 +13,13 @@ from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMix
 
 
 # Define the home view
+def home(request):
+    return render(request, 'home.html')
 
 #####################################
 ############## Chapter ##############
 #####################################
+
 
 class ChapterCreate(LoginRequiredMixin, CreateView):
     model = Chapter
@@ -86,7 +89,7 @@ class Nickname_RequestDetail(LoginRequiredMixin, DetailView):
 
 class Nickname_RequestList(LoginRequiredMixin, PermissionRequiredMixin, ListView):
     model = Nickname_Request
-    permission_required = 'nickname_request.can_view'
+    permission_required = 'main_app.view_nickname_request'
 
 #####################################
 #####################################
@@ -203,6 +206,7 @@ def add_nickname_request(request, pnm_id, sister_id):
             return redirect(f'/pnms/{pnm_id}')
 
 
+@login_required
 def nickname_request_approve(request, nr_id):
     if (request.POST):
         to_approve = Nickname_Request.objects.get(id=nr_id)
@@ -210,6 +214,8 @@ def nickname_request_approve(request, nr_id):
         to_approve.save()
     return redirect('/nickname_requests/')
 
+
+@login_required
 def nickname_request_queue(request, nr_id):
     if (request.POST):
         to_queue = Nickname_Request.objects.get(id=nr_id)
@@ -217,9 +223,20 @@ def nickname_request_queue(request, nr_id):
         to_queue.save()
     return redirect('/nickname_requests/')
 
+
+@login_required
 def nickname_request_deny(request, nr_id):
     if (request.POST):
         to_deny = Nickname_Request.objects.get(id=nr_id)
         to_deny.nickname_approval_status = 'DE'
         to_deny.save()
     return redirect('/nickname_requests/')
+
+
+@login_required
+@permission_required('main_app.delete_pnm')
+def pnm_delete(request, pnm_id):
+    if (request.POST):
+        to_delete = Pnm.objects.get(id=pnm_id)
+        to_delete.delete()
+    return redirect('/pnms/')

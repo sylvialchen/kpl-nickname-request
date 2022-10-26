@@ -1,24 +1,24 @@
 {% extends 'base.html' %}
 
 {% block content %}
+<main class="container">
+  {% if object %}
+  <h2>Edit Request for: {{object.name}} </h2>
+  {% else %}
+  <h2>Add a Nickname Request</h2>
+  {% endif %}
 
-{% if object %}
-<h2>Edit Request for: {{object.name}} </h2>
-{% else %}
-<h2>Add a Nickname Request</h2>
-{% endif %}
-
-<form action="" method="POST">
-  {% csrf_token %}
-  <table>
-    {{ form.as_p }}
-  </table>
-  <input class="btn green" type="submit" value="{% if object %} Edit {% else %} Add {% endif %}">
-</form>
+  <form action="" method="POST">
+    {% csrf_token %}
+    <table>
+      {{ form.as_p }}
+    </table>
+    <input class="btn red" type="submit" value="{% if object %} Edit {% else %} Add {% endif %}">
+  </form>
 
 
-<script>
-  var selectEl = document.getElementById('id_pnm');
-  M.FormSelect.init(selectEl);
-</script>
-{% endblock %}
+  <script>
+    var selectEl = document.getElementById('id_pnm');
+    M.FormSelect.init(selectEl);
+  </script>
+  {% endblock %}

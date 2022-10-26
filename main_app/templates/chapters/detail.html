@@ -1,81 +1,83 @@
 {% extends 'base.html' %}
 
 {% block content %}
+<main class="container">
+  <h3>Chapter Details</h3>
 
-<h3>Chapter Details</h3>
+  <div class="card">
+    <div class="card-content">
+      <span class="card-title">
+        {{ chapter.name }} Chapter @
+        {{ chapter.chapter_school }}</span>
+      <p>Located:
+        {{ chapter.city_state }}
+      </p>
+      <p>Founded on:
+        {{ chapter.original_founding_date }}
+      </p>
+      {% if chapter.recharter_date != null %}
 
-<div class="card">
-  <div class="card-content">
-    <span class="card-title">
-      {{ chapter.name }} Chapter @
-      {{ chapter.chapter_school }}</span>
-    <p>Located:
-      {{ chapter.city_state }}
-    </p>
-    <p>Founded on:
-      {{ chapter.original_founding_date }}
-    </p>
-    {% if chapter.recharter_date != null %}
-
-    <p>Rechartered:
-      {{ chapter.recharter_date }}
-    </p>
+      <p>Rechartered:
+        {{ chapter.recharter_date }}
+      </p>
+      {% endif %}
+    </div>
+    {% if perms.main_app.change_chapter %}
+    <div class="card-action">
+      <a href="{% url 'chapter_update' chapter.id %}">Edit</a>
+    </div>
     {% endif %}
   </div>
-  <div class="card-action">
-    <a href="{% url 'chapter_update' chapter.id %}">Edit</a>
-  </div>
-</div>
 
-<table>
-  <th>
-    Line #
-  </th>
-  <th>
-    First Name
-  </th>
-  <th>
-    Last Name
-  </th>
-  <th>
-    Nickname
-  </th>
-  <th>
-    Class
-  </th>
-  <th>
-    Crossed
-  </th>
-  <th>
-    Status
-  </th>
-
-  {% for sister in sisters %}
-  <tr>
-    <td>
-      {{ sister.line_number }}
-    </td>
-    <td>
-      <a href="{% url 'sister_detail' sister.id %}">
-        {{ sister.first_name }}</a>
-    </td>
-    <td>
-      {{ sister.last_name }}
-    </td>
-    <td>
-      {{ sister.nickname }}
-    </td>
-    <td>
+  <table>
+    <th>
+      Line #
+    </th>
+    <th>
+      First Name
+    </th>
+    <th>
+      Last Name
+    </th>
+    <th>
+      Nickname
+    </th>
+    <th>
       Class
-    </td>
-    <td>
-      {{ sister.crossing_semester }}
-      {{ sister.crossing_year }}
-    </td>
-    <td>
-      {{ sister.status }}
-    </td>
-  </tr>
-  {% endfor %}
-</table>
-{% endblock %}
+    </th>
+    <th>
+      Crossed
+    </th>
+    <th>
+      Status
+    </th>
+
+    {% for sister in sisters %}
+    <tr>
+      <td>
+        {{ sister.line_number }}
+      </td>
+      <td>
+        <a href="{% url 'sister_detail' sister.id %}">
+          {{ sister.first_name }}</a>
+      </td>
+      <td>
+        {{ sister.last_name }}
+      </td>
+      <td>
+        {{ sister.nickname }}
+      </td>
+      <td>
+        Class
+      </td>
+      <td>
+        {{ sister.crossing_semester }}
+        {{ sister.crossing_year }}
+      </td>
+      <td>
+        {{ sister.status }}
+      </td>
+    </tr>
+    {% endfor %}
+  </table>
+  {% endblock %}
