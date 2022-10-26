@@ -4,6 +4,7 @@ An organizational tool for Greek Lettered Organizations to receive nickname requ
 
 ### Technologies Used
 * Django
+* Python
 * HTML
 * CSS
 
