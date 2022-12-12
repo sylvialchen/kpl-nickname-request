@@ -26,7 +26,7 @@ SECRET_KEY = "django-insecure-k=zyzs&(kv#qd0p*p!dfrgit $6je8lvwmyjty9c$$zd2+=q-m
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [glo-member-management.onrender.com]
 
 
 # Application definition
